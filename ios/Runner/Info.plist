@@ -51,5 +51,9 @@
 	<string>SpeechRecognition</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>SpeechRecognition</string>
+	<key>NSCameraUsageDescription</key>
+	<string>objectdetection</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>objectdetection</string>
 </dict>
 </plist>
