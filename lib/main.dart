@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'SoundWave',
+      title: 'VoiceAI',
       theme: ThemeData.light(useMaterial3: true).copyWith(
           scaffoldBackgroundColor: Pallete.whiteColor,
           appBarTheme: const AppBarTheme(backgroundColor: Pallete.whiteColor)),

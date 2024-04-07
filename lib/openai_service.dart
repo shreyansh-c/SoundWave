@@ -19,11 +19,11 @@ class OpenAIService {
               {
                 'role': 'user',
                 'content':
-                    'Does this want to generate an AI picture, image, art or anything similar? $prompt . Simply answer with a yes or no.',
+                    'Does this want to generate an AI picture, image, art, or anything similar? $prompt . Simply answer with a yes or no.',
               }
             ],
           }));
-      print(res.body);
+      //print(res.body);
       if (res.statusCode == 200) {
         String content =
             jsonDecode(res.body)['choices'][0]['message']['content'];

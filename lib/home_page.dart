@@ -1,5 +1,3 @@
-import 'package:animate_do/animate_do.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:sound_wave/camera_feed.dart';
@@ -37,6 +35,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> initSpeechToText() async {
+    await flutterTts.setIosAudioCategory(IosTextToSpeechAudioCategory.playback,
+        [IosTextToSpeechAudioCategoryOptions.defaultToSpeaker]);
     await speechToText.initialize();
     setState(() {});
   }
@@ -72,9 +72,9 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: FadeIn(child: const Text('SoundWave')),
+        title: const Text('VoiceAI'),
         centerTitle: true,
-        leading: const Icon(Icons.menu),
+        //leading: const Icon(Icons.menu),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -83,59 +83,53 @@ class _HomePageState extends State<HomePage> {
             Stack(
               children: [
                 Center(
-                  child: FadeIn(
-                    child: Container(
-                      height: 120,
-                      width: 120,
-                      margin: const EdgeInsets.only(top: 4),
-                      decoration: const BoxDecoration(
-                          color: Pallete.assistantCircleColor,
-                          shape: BoxShape.circle),
-                    ),
+                  child: Container(
+                    height: 120,
+                    width: 120,
+                    margin: const EdgeInsets.only(top: 4),
+                    decoration: const BoxDecoration(
+                        color: Pallete.assistantCircleColor,
+                        shape: BoxShape.circle),
                   ),
                 ),
-                FadeIn(
-                  child: Container(
-                    height: 100,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                          image: AssetImage('assets/images/robot2.png')),
-                    ),
+                Container(
+                  height: 100,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                        image: AssetImage('assets/images/robot2.png')),
                   ),
                 )
               ],
             ),
             //chatbub
 
-            FadeIn(
-              child: Visibility(
-                visible: generatedImageUrl == null,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 10,
-                  ),
-                  margin: const EdgeInsets.symmetric(horizontal: 40).copyWith(
-                    top: 30,
-                  ),
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Pallete.borderColor,
-                      ),
-                      borderRadius: BorderRadius.circular(20)
-                          .copyWith(topLeft: Radius.zero)),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: Text(
-                      generatedContent == null
-                          ? 'Good morning what task can i do for you?'
-                          : generatedContent!,
-                      style: TextStyle(
-                          color: Pallete.mainFontColor,
-                          fontFamily: 'Cera Pro',
-                          fontSize: generatedContent == null ? 25 : 18),
+            Visibility(
+              visible: generatedImageUrl == null,
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 10,
+                ),
+                margin: const EdgeInsets.symmetric(horizontal: 40).copyWith(
+                  top: 30,
+                ),
+                decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Pallete.borderColor,
                     ),
+                    borderRadius: BorderRadius.circular(20)
+                        .copyWith(topLeft: Radius.zero)),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: Text(
+                    generatedContent == null
+                        ? 'Hello! what task can i do for you?'
+                        : generatedContent!,
+                    style: TextStyle(
+                        color: Pallete.mainFontColor,
+                        fontFamily: 'Cera Pro',
+                        fontSize: generatedContent == null ? 25 : 18),
                   ),
                 ),
               ),
@@ -147,49 +141,45 @@ class _HomePageState extends State<HomePage> {
                     borderRadius: BorderRadius.circular(20),
                     child: Image.network(generatedImageUrl!)),
               ),
-            FadeIn(
-              child: Visibility(
-                visible: generatedContent == null && generatedImageUrl == null,
-                child: Container(
-                  padding: const EdgeInsets.all(10),
-                  alignment: Alignment.centerLeft,
-                  margin: const EdgeInsets.only(top: 10, left: 22),
-                  child: const Text(
-                    'Here are a few Features',
-                    style: TextStyle(
-                        fontFamily: 'Cera Pro',
-                        color: Pallete.mainFontColor,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
-                  ),
+            Visibility(
+              visible: generatedContent == null && generatedImageUrl == null,
+              child: Container(
+                padding: const EdgeInsets.all(10),
+                alignment: Alignment.centerLeft,
+                margin: const EdgeInsets.only(top: 10, left: 22),
+                child: const Text(
+                  'Here are a few Features',
+                  style: TextStyle(
+                      fontFamily: 'Cera Pro',
+                      color: Pallete.mainFontColor,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
                 ),
               ),
             ),
             //featureslist
-            FadeIn(
-              child: Visibility(
-                visible: generatedContent == null && generatedImageUrl == null,
-                child: const Column(
-                  children: [
-                    FeatureBox(
-                      color: Pallete.firstSuggestionBoxColor,
-                      headerText: 'ChatGPT',
+            Visibility(
+              visible: generatedContent == null && generatedImageUrl == null,
+              child: const Column(
+                children: [
+                  FeatureBox(
+                    color: Pallete.firstSuggestionBoxColor,
+                    headerText: 'ChatGPT',
+                    descriptionText:
+                        'A smarter way to stay organised and informed with ChatGPT',
+                  ),
+                  FeatureBox(
+                    color: Pallete.secondSuggestionBoxColor,
+                    headerText: 'Dall-E',
+                    descriptionText:
+                        'Stay inspired and stay creative with your personal assistant powered by Dall-E',
+                  ),
+                  FeatureBox(
+                      color: Pallete.thirdSuggestionBoxColor,
+                      headerText: 'TensorFlow',
                       descriptionText:
-                          'A smarter way to stay organised and informed with ChatGPT',
-                    ),
-                    FeatureBox(
-                      color: Pallete.secondSuggestionBoxColor,
-                      headerText: 'Dall-E',
-                      descriptionText:
-                          'Stay inspired and stay creative with your personal assistant powered by Dall-E',
-                    ),
-                    FeatureBox(
-                        color: Pallete.thirdSuggestionBoxColor,
-                        headerText: 'Smart Voice Assistant',
-                        descriptionText:
-                            'Get the best of both worlds with a voice assistant powered by ChatGPT and Dall-E'),
-                  ],
-                ),
+                          'Get real-time information of your surrounding using TensorFlow'),
+                ],
               ),
             ),
           ],
