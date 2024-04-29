@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sound_wave/camera_feed.dart';
 import 'package:sound_wave/home_page.dart';
 import 'package:sound_wave/pallete.dart';
 

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'package:sound_wave/camera_feed.dart';
 import 'package:sound_wave/feature_box.dart';
 import 'package:sound_wave/openai_service.dart';
 import 'package:sound_wave/pallete.dart';
@@ -37,6 +36,7 @@ class _HomePageState extends State<HomePage> {
   Future<void> initSpeechToText() async {
     await flutterTts.setIosAudioCategory(IosTextToSpeechAudioCategory.playback,
         [IosTextToSpeechAudioCategoryOptions.defaultToSpeaker]);
+    await flutterTts.setVoice({"name": "Isha", "locale": "en-IN"});
     await speechToText.initialize();
     setState(() {});
   }
@@ -185,41 +185,49 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Pallete.firstSuggestionBoxColor,
-        onPressed: () async {
-          if (lastWords == "detect object" ||
-              lastWords == "Detect object" ||
-              lastWords == "Detect Object" ||
-              lastWords == "detect Object") {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const CameraScreen()),
-            );
-          } else if (await speechToText.hasPermission &&
-              speechToText.isNotListening) {
-            await startListening();
-          } else if (speechToText.isListening) {
-            final speech = await openAIService.isArtPromptAPI(lastWords);
-            if (speech.contains('https')) {
-              generatedImageUrl = speech;
-              generatedContent = null;
-              setState(() {});
-            } else {
-              generatedImageUrl = null;
-              generatedContent = speech;
-              setState(() {});
-            }
-            if (speech.contains('https')) {
-            } else {
-              await systemSpeak(speech);
-            }
-            await stopListening();
-          } else {
-            initSpeechToText();
-          }
-        },
-        child: Icon(speechToText.isListening ? Icons.stop : Icons.mic),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            backgroundColor: Pallete.firstSuggestionBoxColor,
+            onPressed: () {
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => const CameraScreen()),
+              // );
+            },
+            child: const Icon(Icons.camera_alt),
+          ),
+          const SizedBox(height: 16.0),
+          FloatingActionButton(
+            backgroundColor: Pallete.firstSuggestionBoxColor,
+            onPressed: () async {
+              if (await speechToText.hasPermission &&
+                  speechToText.isNotListening) {
+                await startListening();
+              } else if (speechToText.isListening) {
+                final speech = await openAIService.isArtPromptAPI(lastWords);
+                if (speech.contains('https')) {
+                  generatedImageUrl = speech;
+                  generatedContent = null;
+                  setState(() {});
+                } else {
+                  generatedImageUrl = null;
+                  generatedContent = speech;
+                  setState(() {});
+                }
+                if (speech.contains('https')) {
+                } else {
+                  await systemSpeak(speech);
+                }
+                await stopListening();
+              } else {
+                initSpeechToText();
+              }
+            },
+            child: Icon(speechToText.isListening ? Icons.stop : Icons.mic),
+          ),
+        ],
       ),
     );
   }
