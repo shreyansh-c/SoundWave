@@ -3,6 +3,7 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:sound_wave/feature_box.dart';
 import 'package:sound_wave/openai_service.dart';
 import 'package:sound_wave/pallete.dart';
+import 'package:sound_wave/vision_detector_views/object_detector_view.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
@@ -72,7 +73,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('VoiceAI'),
+        title: const Text('SoundWave'),
         centerTitle: true,
         //leading: const Icon(Icons.menu),
       ),
@@ -191,10 +192,10 @@ class _HomePageState extends State<HomePage> {
           FloatingActionButton(
             backgroundColor: Pallete.firstSuggestionBoxColor,
             onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => const CameraScreen()),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ObjectDetectorView()),
+              );
             },
             child: const Icon(Icons.camera_alt),
           ),

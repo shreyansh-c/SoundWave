@@ -40,20 +40,29 @@ class _CameraScreenState extends State<CameraScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (!_controller.value.isInitialized) {
-      return Container();
-    }
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Center(
-          child: ClipRRect(
-            borderRadius:
-                BorderRadius.circular(16.0), // Set the border radius as needed
-            child: CameraPreview(_controller),
-          ),
-        ),
-      ),
+    return FutureBuilder<void>(
+      future: _initializeControllerFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (_controller.value.isInitialized) {
+            return Scaffold(
+              body: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(16.0),
+                    child: CameraPreview(_controller),
+                  ),
+                ),
+              ),
+            );
+          } else {
+            return const Center(child: Text('Camera initialization failed'));
+          }
+        } else {
+          return const Center(child: CircularProgressIndicator());
+        }
+      },
     );
   }
 }

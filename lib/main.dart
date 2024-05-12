@@ -13,12 +13,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'VoiceAI',
-      theme: ThemeData.light(useMaterial3: true).copyWith(
-          scaffoldBackgroundColor: Pallete.whiteColor,
-          appBarTheme: const AppBarTheme(backgroundColor: Pallete.whiteColor)),
-      home: const HomePage(),
-    );
+        debugShowCheckedModeBanner: false,
+        title: 'SoundWave',
+        theme: ThemeData.light(useMaterial3: true).copyWith(
+            scaffoldBackgroundColor: Pallete.whiteColor,
+            appBarTheme:
+                const AppBarTheme(backgroundColor: Pallete.whiteColor)),
+        home: const HomePage());
   }
 }
